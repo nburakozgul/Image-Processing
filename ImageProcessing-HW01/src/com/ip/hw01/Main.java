@@ -9,16 +9,27 @@ public class Main {
     public static void main(String[] args) {
         // Goruntu belgesini diskten bellege aktar
         Image img = Load.invoke("valve.png");
+        double scale = 2.0;
 
         // genisligi ogren
-        int genislik = img.getXDim();
-
+        int width = img.getXDim();
         // yuksekligi ogren
-        int yukseklik = img.getYDim();
-        System.err.println(genislik + " " + yukseklik);
+        int height = img.getYDim();
 
-        // ayni boyutta bos goruntu olustur
-        Image copy = img.newInstance(false);
+        int wCopy = (int) (width*scale);
+        int hCopy = (int) (height*scale);
+
+
+        Image copy = img.newInstance(wCopy, hCopy,img.getCDim());
+
+        for (int i = 0 ; i < hCopy ; i++)
+            for (int j = 0 ; j < wCopy ; j++) {
+                int x = (int) Math.floor(j/scale);
+                int y = (int) Math.floor(i/scale);
+
+                copy.setXYByte(j , i , img.getXYByte(x,y));
+
+            }
 
         // 100, 100 konumundaki degeri oku
         int p = img.getXYByte(100, 100);
@@ -28,10 +39,10 @@ public class Main {
         Display2D.invoke(img);
 
         // 100, 100 konumuna yeni deger ata
-        img.setXYByte(100, 100, 255);
+
 
         // yeniden goruntule
-        Display2D.invoke(img);
+        Display2D.invoke(copy);
     }
 }
 
