@@ -35,28 +35,29 @@ public class ImageProcessingMethod {
 
             return copy;
         } else if (strat == 1) {
-            int  x, y;
-            for (int i=0; i<hCopy; i = (int) (i + scaleY)) {
-                for (int j=0; j<wCopy; j++) {
-                    x = (int) Math.floor(j/scaleX) ;
-                    y = (int) Math.floor(i/scaleY);
-
-                    if ( x == width - 1 )
-                        copy.setXYByte(j , i , input.getXYByte(x,y));
-                    else
-                        copy.setXYByte(j , i , (int) (((input.getXYByte(x,y) * (scaleX - (j % scaleX)))
-                                                + (input.getXYByte(x+1,y) * (j % scaleX))) / scaleX));
-                }
-            }
-
+            int x, y;
+            int P1, P2, P3, P4;
             for (int i=0; i<hCopy; i++) {
                 for (int j=0; j<wCopy; j++) {
-                    x = (int) Math.floor(j/scaleX) ;
+                    x = (int) Math.floor(j/scaleX);
                     y = (int) Math.floor(i/scaleY);
 
-                    if ( y != height -1 && i % scaleY != 0) {
-                        copy.setXYByte(j , i , (int) (((input.getXYByte(x,y) * (scaleY - (i % scaleY)))
-                                + (input.getXYByte(x,y+1) * (i % scaleY))) / scaleY));
+                    double w = (j % scaleX) / scaleX;
+                    double h = (i % scaleY) / scaleY;
+
+
+                    if ( x == width - 1 || y == height -1 )
+                        copy.setXYByte(j , i , input.getXYByte(x,y));
+                    else {
+                        P1 = input.getXYByte(x, y);
+                        P2 = input.getXYByte(x + 1, y);
+                        P3 = input.getXYByte(x, y + 1);
+                        P4 = input.getXYByte(x + 1, y + 1);
+
+                        int pixel = (int) (P1 * (1 - w) * (1 - h) + P2 * (w) * (1 - h) + P3 * (h) * (1 - w) + P4 * (w) * (h));
+
+                        copy.setXYByte(j, i, pixel);
+
                     }
                 }
             }

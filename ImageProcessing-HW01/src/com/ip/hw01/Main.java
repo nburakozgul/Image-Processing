@@ -11,8 +11,8 @@ public class Main {
         // Goruntu belgesini diskten bellege aktar
         Image img = Load.invoke("valve2.png");
         Display2D.invoke(img);
-        Display2D.invoke(ipm.scale(img, 3.33, 1.0 , 0));
-        Display2D.invoke(ipm.scale(img, 3.33, 1.0 , 1));
+        Display2D.invoke(ipm.scale(img, 2.0, 2.0 , 0));
+        Display2D.invoke(ipm.scale(img, 2.0, 2.0 , 1));
 
     }
 }
