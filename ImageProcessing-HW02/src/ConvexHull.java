@@ -1,6 +1,4 @@
 import vpt.Image;
-import vpt.algorithms.display.Display2D;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +7,12 @@ import java.util.List;
  */
 public class ConvexHull {
 
+    // creates one channel image from input image
+    // if we have one 255 in any channel we set that pixel 255
     private Image createOneChannelImage(Image input){
+        if (input.getCDim() == 1)
+            return input;
+
         boolean hit = true;
         Image resultImg = input.newInstance(input.getXDim(), input.getYDim(),1);
 
@@ -33,6 +36,7 @@ public class ConvexHull {
         return resultImg;
     }
 
+    // applies filter that given as a two dimentional array to input image
     private Image applyFilter(Image input, int[][] filter ) {
         Image resultImg = input.newInstance(false);
         boolean hit = true;
@@ -50,10 +54,10 @@ public class ConvexHull {
 
                         if (filterValue == 0)
                             continue;
-                        else if (filterValue == 1 && imageValue != 255) {
+                        else if (filterValue == 1 && imageValue != 255) { // 1 ilse 255
                             hit = false;
                             break;
-                        } else if (filterValue == -1 && imageValue != 0) {
+                        } else if (filterValue == -1 && imageValue != 0) { // -1 ise 0 olmalidir.
                             hit = false;
                             break;
                         }
@@ -75,6 +79,7 @@ public class ConvexHull {
         return resultImg;
     }
 
+    // applies filter to input and output image will be same
     private Image applyFilterMultipleTime(Image input, int[][] filter) {
         input = createOneChannelImage(input);
         Image resultImage;
@@ -90,6 +95,7 @@ public class ConvexHull {
         return resultImage;
     }
 
+    // if two image are same returns true if not returns false
     private boolean equal(Image img1, Image img2) {
         if (img1.getXDim() != img2.getXDim())
             return false;
@@ -104,6 +110,7 @@ public class ConvexHull {
         return true;
     }
 
+    // combine images in the arraylist
     private Image conbineImages(List<Image> imageList) {
         Image resultImage = imageList.get(0).newInstance(false);
         int H = imageList.get(0).getYDim();
@@ -115,17 +122,17 @@ public class ConvexHull {
             for (int x  = 0 ; x < W ; x++) {
 
                 for (Image img : imageList) {
-                    if (img.getXYByte(x, y) == 255) {
+                    if (img.getXYByte(x, y) == 255) { // if we have at least one 255
                         hit = true;
                         break;
                     }
                 }
 
                 if (hit) {
-                    resultImage.setXYByte(x, y, 255);
+                    resultImage.setXYByte(x, y, 255); // we set that pixel 255
                     hit = false;
                 } else {
-                    resultImage.setXYByte(x, y, 0);
+                    resultImage.setXYByte(x, y, 0); // if we have not that pixel will be 0
                 }
             }
         }
@@ -133,6 +140,9 @@ public class ConvexHull {
         return resultImage;
     }
 
+    // calculating convex hull of the inout image
+    // applies 4 filter to input image
+    // after that combines the results
     public Image convexHull(Image input) {
         input = createOneChannelImage(input);
         List<Image> imageList = new ArrayList<Image>();

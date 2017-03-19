@@ -1,0 +1,522 @@
+\documentclass[12pt]{article}
+
+
+\usepackage{amsmath} 
+
+\title{Image Processing HW02}
+\author{Necati Burak Ozgul}
+\date{March 19 2017}
+	
+\begin{document}
+\maketitle
+
+\section{}
+
+Asagida islenecek goruntunun matrixi bulunmaktadır.
+
+$$f = \begin{bmatrix}
+1 & 2 & 3 & 4\\ 
+5 & 6 & 7 & 6\\ 
+3 & 4 & 2 & 7\\ 
+1 & 5 & 11 & 3
+\end{bmatrix}$$
+
+Mean Filter ise asagidaki gibidir.
+$$m = 1/9\begin{bmatrix}
+ 1&  1& 1\\ 
+ 1&  1& 1\\ 
+ 1&  1& 1
+\end{bmatrix} $$
+
+Yatay ve dikeyde ise sirasiyla su sekildedir.
+$$mX = 1/3\begin{bmatrix}
+ 1&  1& 1
+\end{bmatrix} mY = 1/3\begin{bmatrix}
+ 1 \\ 
+ 1 \\ 
+ 1 
+\end{bmatrix} $$
+
+Formul halinde yazarsak sirasiyla yatay ve dikey mean filterin formulleri asagisaki gibidir.
+\begin{equation}
+f(x,y) = 1/3 (f(x-1,y)+f(x,y)+f(x+1,y))
+\end{equation}
+\begin{equation}
+f(x,y) = 1/3 (f(x,y-1)+f(x,y)+f(x,y+1))
+\end{equation}
+
+
+\subsection{Filtrenin yatay duzlemde uygulanmasi}
+
+Goruntuye matrixine yatayda mirror padding uygularsak asagidaki hale gelecektir.
+
+$$f = \begin{bmatrix}
+ 1&  1&  2&  3&  4& 4\\ 
+ 5&  5&  6&  7&  6& 6\\ 
+ 3&  3&  4&  2&  7& 7\\ 
+ 1&  1&  5&  11&  3& 3
+\end{bmatrix}$$
+
+Bu goruntuye yatay mean filteri uygulayalim.
+
+\subsubsection{Satir 1}
+
+\begin{equation}
+\begin{split}
+f(1,0) = 1/3 (f(0,0)+f(1,0)+f(2,0)) \\
+1/3 (1+1+2) = 4/3 
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+f(2,0) = 1/3 (f(1,0)+f(2,0)+f(3,0)) \\
+1/3 (1+2+3) = 6/3  = 2
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+f(3,0) = 1/3 (f(2,0)+f(3,0)+f(4,0)) \\
+1/3 (2+3+4) = 9/3 = 3 
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+f(4,0) = 1/3 (f(3,0)+f(4,0)+f(5,0)) \\
+1/3 (3+4+4) = 11/3
+\end{split}
+\end{equation}
+
+\subsubsection{Satir 2}
+
+\begin{equation}
+\begin{split}
+f(1,1) = 1/3 (f(0,1)+f(1,1)+f(2,1)) \\
+1/3 (5+5+6) = 16/3
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+f(2,1) = 1/3 (f(1,1)+f(2,1)+f(3,1)) \\
+1/3 (5+6+7) = 6
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+f(3,1) = 1/3 (f(2,1)+f(3,1)+f(4,1)) \\
+1/3 (6+7+6) = 19/3 
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+f(4,1) = 1/3 (f(3,1)+f(4,1)+f(5,1)) \\
+1/3 (7+6+6) = 19/3
+\end{split}
+\end{equation}
+
+\subsubsection{Satir 3}
+
+\begin{equation}
+\begin{split}
+f(1,2) = 1/3 (f(0,2)+f(1,2)+f(2,2)) \\
+1/3 (3+3+4) = 10/3
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+f(2,2) = 1/3 (f(1,2)+f(2,2)+f(3,2)) \\
+1/3 (3+4+2) = 3
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+f(3,2) = 1/3 (f(2,2)+f(3,2)+f(4,2)) \\
+1/3 (4+2+7) = 13/3 
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+f(4,2) = 1/3 (f(3,2)+f(4,2)+f(5,2)) \\
+1/3 (2+7+7) = 16/3
+\end{split}
+\end{equation}
+
+\subsubsection{Satir 4}
+
+\begin{equation}
+\begin{split}
+f(1,3) = 1/3 (f(0,3)+f(1,3)+f(2,3)) \\
+1/3 (1+1+5) = 7/3
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+f(2,3) = 1/3 (f(1,3)+f(2,3)+f(3,3)) \\
+1/3 (1+5+11) = 17/3
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+f(3,3) = 1/3 (f(2,3)+f(3,3)+f(4,3)) \\
+1/3 (5+11+3) = 19/3
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+f(4,3) = 1/3 (f(3,3)+f(4,3)+f(5,3)) \\
+1/3 (11+3+3) = 17/3
+\end{split}
+\end{equation}
+
+Mirror padding alinmis halini yazarsak 
+
+$$f = \begin{bmatrix}
+1 & 4/3 & 2 & 3 & 11/3 & 4\\ 
+5 & 16/3 & 6 & 19/3 & 19/3 & 6\\ 
+3 & 10/3 & 3 & 13/3 & 16/3 & 7\\ 
+1 & 7/3 & 17/3 & 19/3 & 17/3 & 3
+\end{bmatrix}$$
+
+Sol ve sag taraftaki padding kismini kaldirirsak yatayda mean filter uyulanmis haline ulasiriz
+
+$$f = \begin{bmatrix}
+4/3 & 2 & 3 & 11/3\\ 
+16/3 & 6 & 19/3 & 19/3\\ 
+10/3 & 3 & 13/3 & 16/3\\ 
+7/3 & 17/3 & 19/3 & 17/3
+\end{bmatrix}$$
+
+
+
+
+
+
+
+\subsection{Filtrenin dikey duzlemde uygulanmasi}
+
+Goruntuye matrixine dikeyde mirror padding uygularsak asagidaki hale gelecektir.
+
+$$f = \begin{bmatrix}
+4/3 & 2 & 3 & 11/3\\ 
+4/3 & 2 & 3 & 11/3\\ 
+16/3 & 6 & 19/3 & 19/3\\ 
+10/3 & 3 & 13/3 & 16/3\\ 
+7/3 & 17/3 & 19/3 & 17/3\\
+7/3 & 17/3 & 19/3 & 17/3
+\end{bmatrix}$$
+
+Bu goruntuye dikeyde mean filteri uygulayalim.
+
+\subsubsection{Sutun 1}
+
+\begin{equation}
+\begin{split}
+f(0,1) = 1/3 (f(0,0)+f(0,1)+f(0,2)) \\
+1/3 (4/3+4/3+16/3) = 8/3
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+f(0,2) = 1/3 (f(0,1)+f(0,2)+f(0,3)) \\
+1/3 (4/3+16/3+10/3) = 10/3
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+f(0,3) = 1/3 (f(0,2)+f(0,3)+f(0,4)) \\
+1/3 (16/3+10/3+7/3) = 11/3
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+f(0,4) = 1/3 (f(0,3)+f(0,4)+f(0,5)) \\
+1/3 (10/3+7/3+7/3) = 8/3
+\end{split}
+\end{equation}
+
+\subsubsection{Sutun 2}
+
+\begin{equation}
+\begin{split}
+f(1,1) = 1/3 (f(1,0)+f(1,1)+f(1,2)) \\
+1/3 (2+2+6) = 10/3
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+f(1,2) = 1/3 (f(1,1)+f(1,2)+f(1,3)) \\
+1/3 (2+6+3) = 11/3
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+f(1,3) = 1/3 (f(1,2)+f(1,3)+f(1,4)) \\
+1/3 (6+3+17/3) = 5
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+f(1,4) = 1/3 (f(1,3)+f(1,4)+f(1,5)) \\
+1/3 (3+17/3+17/3) = 43/9
+\end{split}
+\end{equation}
+
+\subsubsection{Sutun 3}
+
+\begin{equation}
+\begin{split}
+f(2,1) = 1/3 (f(2,0)+f(2,1)+f(2,2)) \\
+1/3 (3+3+19/3) = 37/9
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+f(2,2) = 1/3 (f(2,1)+f(2,2)+f(2,3)) \\
+1/3 (3+19/3+13/3) = 41/9
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+f(2,3) = 1/3 (f(2,2)+f(2,3)+f(2,4)) \\
+1/3 (19/3+13/3+19/3) = 51/9
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+f(2,4) = 1/3 (f(2,3)+f(2,4)+f(2,5)) \\
+1/3 (19/3+13/3+19/3) = 51/9
+\end{split}
+\end{equation}
+
+\subsubsection{Sutun 4}
+
+\begin{equation}
+\begin{split}
+f(3,1) = 1/3 (f(3,0)+f(3,1)+f(3,2)) \\
+1/3 (11/3+11/3+19/3) = 41/9
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+f(3,2) = 1/3 (f(3,1)+f(3,2)+f(3,3)) \\
+1/3 (11/3+19/316/3) = 46/9
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+f(3,3) = 1/3 (f(3,2)+f(3,3)+f(3,4)) \\
+1/3 (19/3+16/3+17/3) = 52/9
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+f(3,4) = 1/3 (f(3,3)+f(3,4)+f(3,5)) \\
+1/3 (16/3+17/3+17/3) = 50/9
+\end{split}
+\end{equation}
+
+Yatayda mean filter uyulanmis hali :
+
+$$f = \begin{bmatrix}
+ 8/3&  10/3&  37/9&  41/9\\ 
+ 10/3&  11/3&  41/9&  46/9\\ 
+ 11/3&  5&  51/9&  52/9\\ 
+ 8/3&  43/9&  51/9&  50/9
+\end{bmatrix}$$
+
+\subsection{ Efficent way Suggestion}
+
+$$ f' =  (f * mX) * mY$$ seklinde uygulamak yerine $$ f' = f * ( mX * mY )$$ once filtrelire kendi aralarinda katlama islemine tabi tuttuktan sonra goruntuye uygularsak daha hizli bir sonuc elde ederiz.
+
+
+\section{}
+$$\partial f / \partial x' = \partial f / \partial x * \partial x / \partial x' + \partial f / \partial y * \partial y / \partial x'$$ 
+
+Chain rule dan gelen yukaridaki formulun ikinci turevini alirsak
+
+\begin{equation}
+\begin{split}
+\partial ^{2}f/\partial x'^{2} = \partial /\partial x'\left ( \partial f/\partial x' \right ) = \\
+\partial ^{2} f / \partial ^{2}x * \left ( \partial x/\partial x' \right )^{2} + \partial f/\partial x * \partial^{2}x/\partial x'^{2}   \\
++ 2* \partial ^{2} f / \partial x\partial y * \partial x/ \partial x' * \partial y/ \partial x' \\
++ \partial ^{2} f / \partial ^{2}y * \left ( \partial y/\partial x' \right )^{2} 
++ \partial f/\partial y * \partial^{2}y/\partial x'^{2}
+\end{split}
+\end{equation}
+
+cikar.
+
+$$\partial f / \partial y' = \partial f / \partial x * \partial x / \partial y' + \partial f / \partial y * \partial y / \partial y'$$ 
+  gene ikinci turevini alirsak
+
+\begin{equation}
+\begin{split}
+\partial ^{2}f/\partial y'^{2} = \partial /\partial y'\left ( \partial f/\partial y' \right ) = \\
+\partial ^{2} f / \partial ^{2}x * \left ( \partial x/\partial y' \right )^{2} + \partial f/\partial x * \partial^{2}x/\partial y'^{2}   \\
++ 2* \partial ^{2} f / \partial x\partial y * \partial x/ \partial y' * \partial y/ \partial y' \\
++ \partial ^{2} f / \partial ^{2}y * \left ( \partial y/\partial y' \right )^{2} 
++ \partial f/\partial y * \partial^{2}y/\partial y'^{2}
+\end{split}
+\end{equation}
+
+cikar. Bu iki ikinci turevde asagidaki formulleri ve ikinci turevleri icin 0 i yerine koyarsak
+
+\begin{equation}
+\begin{split}
+\partial y / \partial x' = sin\theta \\
+\partial x / \partial x' = cos\theta \\
+\partial y / \partial y' = cos\theta \\
+\partial x / \partial y' = -sin\theta \\
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+\partial ^{2}f/\partial x'^{2} = \partial /\partial x'\left ( \partial f/\partial x' \right ) = \\
+\partial ^{2} f / \partial ^{2}x * \left ( cos\theta \right )^{2} + 2 \partial f/\partial x \partial y *cos\theta sin\theta   \\
++ \partial ^{2} f / \partial ^{2}y * \left (sin\theta \right )^{2} 
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+\partial ^{2}f/\partial y'^{2} = \partial /\partial y'\left ( \partial f/\partial y' \right ) = \\
+\partial ^{2} f / \partial ^{2}x * \left ( -sin\theta \right )^{2} - 2 \partial f/\partial x \partial y *sin\theta cos\theta   \\
++ \partial ^{2} f / \partial ^{2}y * \left (cos\theta \right )^{2} 
+\end{split}
+\end{equation}
+
+Iki denklemi toplarsak ..
+
+\begin{equation}
+\begin{split}
+\partial ^{2}f/\partial x'^{2} + \partial ^{2}f/\partial y'^{2} = \\
+ \partial ^{2}f/\partial ^{2}x \left ( \left ( cos\theta \right )^{2} + \left ( -sin\theta \right )^{2} \right ) \\
++ 2 \partial f/\partial x \partial y *cos\theta sin\theta  - 2 \partial f/\partial x \partial y *sin\theta cos\theta \\
+ \partial ^{2}f/\partial ^{2}y \left ( \left ( sin\theta \right )^{2} + \left ( cos\theta \right )^{2} \right )
+\end{split}
+\end{equation}
+
+Sadelestirirsek
+$$+ 2 \partial f/\partial x \partial y *cos\theta sin\theta  - 2 \partial f/\partial x \partial y *sin\theta cos\theta$$ 
+birbirini gotureceginden ve $$ cos\theta ^{2} + sin\theta ^{2} = 1$$ oldugundan
+
+\begin{equation}
+\begin{split}
+\partial ^{2}f/\partial x'^{2} + \partial ^{2}f/\partial y'^{2} =  \partial ^{2}f/\partial ^{2}x +  \partial ^{2}f/\partial ^{2}y
+\end{split}
+\end{equation}
+
+gelecektir. Böylece Laplacian operatorunun rotasyondan etkilenmedigini ispatlamis olduk.
+
+
+
+
+
+
+\section{}
+
+\subsection{b}
+
+H maskesinin formulunu matrix olarak yazarsak convolution maska ulasmis oluyoruz. O da asagidaki gibidir.
+
+$$h =1/89 \begin{bmatrix}
+ 0&  -17&  0\\ 
+ 2&  3&  2\\ 
+ 0&  99&  0\\ 
+\end{bmatrix}$$
+
+\subsection{a}
+h maske ve f1 , f2 goruntu olmak uzere $$h(f1 + f2 ) = h(f1) + h(f2) $$ oldugunu gosterebilirsek, h maskesinin lineer oldugunu ispatlamis oluyoruz.
+f1 ve f2 asagidaki gibi olsun, h maskesini ise b sikkindan biliyoruz.
+
+
+$$f1 =  \begin{bmatrix}
+ 100&  100&  100\\ 
+ 100&  100&  100\\ 
+ 100&  100&  100\\ 
+\end{bmatrix}$$
+$$f2 = \begin{bmatrix}
+ 150&  150&  150\\ 
+ 150&  150&  150\\ 
+ 150&  150&  150\\ 
+\end{bmatrix}$$
+
+h maskesini uygular ve f1' + f2' islemni uygularsak asagidaki sonuc cikyor.
+
+$$\begin{bmatrix}
+ 1&  1&  1\\ 
+ 1&  1&  1\\ 
+ 1&  1&  1\\ 
+\end{bmatrix} +
+\begin{bmatrix}
+ 1.5&  1.5&  1.5\\ 
+ 1.5&  1.5&  1.5\\ 
+ 1.5&  1.5&  1.5\\ 
+\end{bmatrix} = 
+ \begin{bmatrix}
+ 2.5&  2.5&  2.5\\ 
+ 2.5&  2.5&  2.5\\ 
+ 2.5&  2.5&  2.5\\ 
+\end{bmatrix}$$ 
+
+Ayni sonucun ciktigini gormek icin H( f1 + f2 ) islemini de uygulayalim.
+
+$$\begin{bmatrix}
+ 100&  100&  100\\ 
+ 100&  100&  100\\ 
+ 100&  100&  100\\ 
+\end{bmatrix} +
+ \begin{bmatrix}
+ 150&  150&  150\\ 
+ 150&  150&  150\\ 
+ 150&  150&  150\\ 
+\end{bmatrix} = 
+ \begin{bmatrix}
+ 250&  250&  250\\ 
+ 250&  250&  250\\ 
+ 250&  250&  250\\ 
+\end{bmatrix}$$ 
+
+Toplama isleminden cikan sonuca h maskesini uygularsak gorcegiz ki ayni sonuc cikacak.
+
+$$ f*H =  \begin{bmatrix}
+ 2.5&  2.5&  2.5\\ 
+ 2.5&  2.5&  2.5\\ 
+ 2.5&  2.5&  2.5\\ 
+\end{bmatrix}$$ 
+
+Goruldugu gibi ayni sonucu aldik bu yuzden H fonksiyonu lineedir.
+
+
+
+
+
+
+
+
+
+\end{document}
