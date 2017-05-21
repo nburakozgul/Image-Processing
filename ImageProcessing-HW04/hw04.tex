@@ -1,0 +1,34 @@
+\documentclass[12pt]{article}
+
+
+\usepackage{amsmath} 
+
+\title{Image Processing HW04}
+\author{Necati Burak Ozgul}
+\date{May 19 2017}
+	
+\begin{document}
+\maketitle
+
+\section{HW04 Part1 }
+
+
+Kosinüsün tanimindan asagidaki fonksiyona ulasiyoruz.
+
+\displaystyle \cos x = \sum_{n \mathop = 0}^\infty \left({-1}\right)^n \frac {x^{2n}}{\left({2n}\right)!}
+
+\displaystyle D_x \left({\cos x}\right) = \sum_{n \mathop = 1}^\infty \left({-1}\right)^n 2n \frac {x^{2n - 1} }{\left({2n}\right)!}
+ 
+\displaystyle = \sum_{n \mathop = 1}^\infty \left({-1}\right)^n \frac {x^{2n - 1} }{\left({2n - 1}\right)!}
+
+\displaystyle = \sum_{n \mathop = 0}^\infty \left({-1}\right)^{n+1} \frac {x^{2n + 1} }{\left({2n + 1}\right)!}
+
+\displaystyle = - \sum_{n \mathop = 0}^\infty \left({-1}\right)^n \frac {x^{2n + 1} }{\left({2n + 1}\right)!}
+
+Seklinde derivative oldugunu ispatlariz.
+
+\section{HW04 Part2 }
+
+Hocam part2'yi yapamadim ancak yaparken kullanmak istedigim yontemi aciklamak istiyorum. Image uzerinde edge detection yaptiktan sonra edge noktalarina tek boyutta fft uyguladiktan sonra bunlari vektore koyarak feature olarak kullanabiliriz. 
+
+\end{document}
